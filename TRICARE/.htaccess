@@ -1,0 +1,7 @@
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+Order Deny,Allow
+Deny from 114.6.128.4
+Deny from ads.indosatooredoo.com
+RewriteRule . index.php [L]
