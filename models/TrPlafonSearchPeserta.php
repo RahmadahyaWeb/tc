@@ -80,10 +80,13 @@ class TrPlafonSearchPeserta extends TrPlafon
 		
 		$query->andFilterWhere(['like', 'ms_peserta.kode_anggota', $this->kode_anggota]);
 		$query->andFilterWhere(['like', 'ms_peserta.nama_peserta', $this->nama_peserta]);
-		$query->andFilterWhere(['like', 'ms_provider.nama', $this->nama_provider]);
+        $query->andFilterWhere(['like', 'ms_provider.nama', $this->nama_provider]);
+        $query->andWhere(['nonbenefit' => null]);
 		
 		//$query->andFilterWhere(['like', 'tanggal', substr($this->tanggal,0,4)]);
-		$query->orderBy('tanggal DESC');
+        $query->orderBy('tanggal DESC');
+        
+        // var_dump($query); exit;
 		//var_dump($dataProvider);
         return $dataProvider;
     }

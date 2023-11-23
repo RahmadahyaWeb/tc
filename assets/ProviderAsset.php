@@ -29,6 +29,7 @@ class ProviderAsset extends AssetBundle
         'https://use.fontawesome.com/releases/v6.3.0/js/all.js',
     ];
     public $depends = [
-        'yii\web\YiiAsset'
+        'yii\web\YiiAsset',
+        // 'yii\bootstrap\BootstrapAsset'
     ];
 }

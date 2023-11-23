@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model app\models\TrProgressProvider */
 
 $this->title = 'Penerimaan Berkas';
-$this->params['breadcrumbs'][] = ['label' => 'Progress Tricare Provider', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Tr Progress Providers', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -18,5 +18,9 @@ $this->params['breadcrumbs'][] = $this->title;
     'model' => $model,
     'list_provider' => $list_provider
   ]) ?>
+
+
+
+
 
 </div>

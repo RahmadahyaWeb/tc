@@ -82,9 +82,11 @@ class MsbenefitController extends Controller
             $model->create_time = date("Y-m-d H:i:s");
             $link_file = UploadedFile::getInstance($model,'link');
 			$model->link_file = $link_file;
+
 			$nama_memo = $model->link_file->baseName.'.'.$model->link_file->extension;
 			$new_nama_memo = $model->judul.date("YmdHis").'.'.$model->link_file->extension;
 			$model->link = 'files/benefit/'.$new_nama_memo;
+            
             if($model->save()){
                 $model->link_file->saveAs(\Yii::$app->basePath.'/files/benefit/'.$nama_memo);
 				rename(\Yii::$app->basePath.'/files/benefit/'.$nama_memo, \Yii::$app->basePath.'/files/benefit/'.$new_nama_memo);

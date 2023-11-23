@@ -266,6 +266,128 @@ class TrsuratController extends Controller
 		$month = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
 		return $month[intval($m) - 1];
 	}
+	
+	public function actionPrinttest($id){
+		$model = $this->findModel($id);
+		$modelConfig = new MsConfig();
+		$modelpeserta = new MsPeserta();
+		$modelplafon = new MsPlafon();
+		$modelplafonextend = new MsPlafonextend();
+		$modeltrplafon = new TrPlafon();
+		$jenissurat = $model->jenis_surat;
+		$tgl = strtotime($model->tgl_surat);
+		$tglSurat = date("d", $tgl) . " " . $this->month_name(date("m", $tgl)) . " " . date("Y", $tgl);
+		$peserta = $modelpeserta->findOne($model->id_peserta);
+		$jmlAnggota = $modelpeserta->getJumlahAnggota($peserta->kode_anggota);
+		$dataMengetahui = $modelConfig->find()
+				->select("value")
+				->where("name = 'MENGETAHUI IURAN'")
+				->one();
+
+			$pesertainduk = $modelpeserta->getPesertaInduk($peserta->kode_anggota);
+			if ($peserta->keterangan <> 'PESERTA INDUK') {
+				if ($peserta->keterangan == 'ISTRI') {
+					$nama_peserta = $model->nama_peserta . " (Istri Bpk. " . $pesertainduk->nama_peserta . ")";
+				} else if ($peserta->keterangan == 'SUAMI') {
+					$nama_peserta = $model->nama_peserta . " (Suami Ibu " . $pesertainduk->nama_peserta . ")";
+				} else {
+					if($pesertainduk->jenis_kelamin == 'L'){
+						$nama_peserta = $model->nama_peserta . " (Anak Bpk. " . $pesertainduk->nama_peserta . ")";
+					} else {
+						$nama_peserta = $model->nama_peserta . " (Anak Ibu " . $pesertainduk->nama_peserta . ")";
+					}
+				}
+				$model->nama_peserta = $nama_peserta;
+				$plafonkecelakaan = $modelplafonextend->getDataPlafon('KECELAKAAN', 'TANGGUNGAN', 1);
+				$plafonbedahkecil = $modelplafonextend->getDataPlafon('PEMBEDAHAN KECIL', 'TANGGUNGAN', 1);
+				$plafonbedahsedang = $modelplafonextend->getDataPlafon('PEMBEDAHAN SEDANG', 'TANGGUNGAN', 1);
+				$plafonbedahbesar = $modelplafonextend->getDataPlafon('PEMBEDAHAN BESAR', 'TANGGUNGAN', 1);
+			} else {
+				$plafonkecelakaan = $modelplafon->getDataPlafon('KECELAKAAN', $peserta->level_jabatan);
+				$plafonbedahkecil = $modelplafon->getDataPlafon('PEMBEDAHAN KECIL', $peserta->level_jabatan);
+				$plafonbedahsedang = $modelplafon->getDataPlafon('PEMBEDAHAN SEDANG', $peserta->level_jabatan);
+				$plafonbedahbesar = $modelplafon->getDataPlafon('PEMBEDAHAN BESAR', $peserta->level_jabatan);
+				$nama_peserta = $model->nama_peserta . " (Peserta)";
+			}
+			$model->nama_peserta = $nama_peserta;
+
+			$plafonkamar = $modelplafon->getDataPlafon('KAMAR RAWAT INAP', $peserta->level_jabatan);
+			$plafonkunjungan = $modelplafon->getDataPlafon('KUNJUNGAN DOKTER', $peserta->level_jabatan);
+			$plafonctscan = $modelplafon->getDataPlafon('CT SCAN & MRI', $peserta->level_jabatan);
+			$plafonrawatinap = $modelplafonextend->getDataPlafon('RAWAT INAP', $peserta->level_jabatan, $jmlAnggota);
+
+			$dataTr = $modeltrplafon->getAllTransPertahun($model->kode_anggota, 'RAWAT INAP', date("Y", $tgl));
+			$pemakaianPlafon = 0;
+			$sisaplafoninap = $plafonrawatinap->nominal - $pemakaianPlafon;
+			$sisahari = 30;
+
+			foreach ($dataTr as $da) {
+				if ($da->biaya > 0) {
+					$sisaplafoninap = $sisaplafoninap - $da->biaya;
+					$hari = round(((strtotime($da->tanggal_selesai) - strtotime($da->tanggal)) / (60 * 60 * 24))) + 1;
+					$sisahari = $sisahari - $hari;
+				}
+			}
+
+			$thisdata = (object)[
+				'plafonkamar' => number_format($plafonkamar->nominal, 0, ',', '.'),
+				'plafonkunjungan' => number_format($plafonkunjungan->nominal, 0, ',', '.'),
+				'plafonkecelakaan' => number_format($plafonkecelakaan->nominal, 0, ',', '.'),
+				'plafonbedahkecil' => number_format($plafonbedahkecil->nominal, 0, ',', '.'),
+				'plafonbedahsedang' => number_format($plafonbedahsedang->nominal, 0, ',', '.'),
+				'plafonbedahbesar' => number_format($plafonbedahbesar->nominal, 0, ',', '.'),
+				'plafonctscan' => number_format($plafonctscan->nominal, 0, ',', '.'),
+				'sisahari' => $sisahari,
+				'sisaplafoninap' => number_format($sisaplafoninap, 0, ',', '.'),
+			];
+
+			$content = $this->renderpartial('suratjaminanrawatinapp', [
+				'data' => $model,
+				'tglSurat' => $tglSurat,
+				'thisdata' => $thisdata
+			]);
+			
+			// return $content;
+			$pdf = new Pdf([
+				'mode' => Pdf::MODE_CORE,
+				'format' => Pdf::FORMAT_LEGAL,
+				'filename' => 'SuratOnline - ' . str_replace("/", "-", $model->no_surat) . '.pdf',
+				'destination' => Pdf::DEST_BROWSER,
+				// 'destination' => Pdf::DEST_DOWNLOAD, //DEST_BROWSER, DEST_FILE, DEST_STRING
+				'content' => $content,
+				'cssInline' => '
+					#maindiv{
+						font-size: 14.3px;
+					},
+					#divtable0{
+						margin-left: -2px;
+					},
+					#divtable1{
+						margin-left: 50px;
+					},
+					#divtable2{
+						margin-left: 50px;
+					},
+					td{
+						padding:0px;
+						vertical-align: top;
+						text-align: justify;
+						text-justify: inter-word;
+						font-size: 14.3px;
+					},
+					li{
+						text-align: justify;
+						text-justify: inter-word;
+					}
+					',
+				'methods' => [
+					'SetTitle' => ['Cetak Surat Online'],
+					// 'SetHeader' => [$model->jenis_surat],
+					// 'SetFooter' => ['{PAGENO}'],
+				]
+			]);
+			return $pdf->render();
+	}
 
 	public function actionPrint($id)
 	{
@@ -348,7 +470,7 @@ class TrsuratController extends Controller
 				'tglSurat' => $tglSurat,
 				'thisdata' => $thisdata
 			]);
-
+			
 			$pdf = new Pdf([
 				'mode' => Pdf::MODE_CORE,
 				'format' => Pdf::FORMAT_LEGAL,

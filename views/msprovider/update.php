@@ -9,6 +9,7 @@ $this->title = 'Update Provide: ' . $model->jenis_provider.' - '.$model->nama;
 $this->params['breadcrumbs'][] = ['label' => 'Master Provider', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->jenis_provider.' - '.$model->nama, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
+
 ?>
 <div class="ms-provider-update">
 

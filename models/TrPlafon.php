@@ -33,18 +33,16 @@ class TrPlafon extends \yii\db\ActiveRecord
     public $kode_anggota;
     public $nama_peserta;
     public $nama_provider;
-    public $keterangan;
+    // public $keterangan;
 
-    //public $kode_anggota;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id_peserta', 'id_provider', 'tanggal', 'biaya'], 'required'],
-            [['id_peserta', 'id_provider', 'biaya'], 'integer'],
-            [['tanggal', 'tanggal_selesai', 'kode_anggota', 'nama_peserta', 'nama_provider', 'nama_plafon'], 'safe'],
+            [['id_peserta', 'id_provider', 'tanggal', 'biaya', 'nama_plafon', 'tanggal', 'tanggal_selesai'], 'required'],
+            [['kode_anggota', 'nama_peserta', 'nama_provider'], 'safe'],
             [['id_peserta'], 'exist', 'skipOnError' => true, 'targetClass' => MsPeserta::className(), 'targetAttribute' => ['id_peserta' => 'id']],
             [['id_provider'], 'exist', 'skipOnError' => true, 'targetClass' => MsProvider::className(), 'targetAttribute' => ['id_provider' => 'id']],
             [['nama_plafon'], 'exist', 'skipOnError' => true, 'targetClass' => MsJenisPlafon::className(), 'targetAttribute' => ['nama_plafon' => 'nama_plafon']],
@@ -133,9 +131,9 @@ class TrPlafon extends \yii\db\ActiveRecord
     // {
     //     $dataTr = self::find()
     //         ->where("id_peserta = ".$id)
+    //             'PERSALINAN DENGAN BANTUAN DOKTER (NORMAL)',
     //         ->andWhere("nama_plafon in (
     //             'PERSALINAN DENGAN BANTUAN BIDAN',
-    //             'PERSALINAN DENGAN BANTUAN DOKTER (NORMAL)',
     //             'PERSALINAN DENGAN BANTUAN DOKTER (CAESAR)',
     //             'PERSALINAN DILUAR RAHIM (KEHAMILAN EKTOPIK)',
     //             'VAKUM ASPIRASI/KURET',

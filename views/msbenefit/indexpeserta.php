@@ -25,8 +25,6 @@ $this->params['breadcrumbs'][] = $this->title;
         }
     } else {
         echo '~ Belum Ada Data. ~';
-    }
-    
-    
+    } 
     ?>
 </div>

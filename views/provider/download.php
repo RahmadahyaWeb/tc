@@ -4,7 +4,10 @@ $this->title = 'DOWNLOAD';
 
 $no = 1;
 
+
+
 ?>
+
 
 <table class="table table-bordered">
 	<thead class="table-dark">
@@ -19,7 +22,7 @@ $no = 1;
 			<?php  
 			$link = Yii::$app->request->baseUrl.'/../'.$document['link'];
 			?>
-			<tr class="text-center fw-bold">
+			<tr class="text-center">
 				<td><?= $no++ ?></td>
 				<td><?= $document["judul"] ?></td>
 				<td>

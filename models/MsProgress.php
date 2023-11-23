@@ -83,4 +83,6 @@ class MsProgress extends \yii\db\ActiveRecord
 		];
 		return ArrayHelper::map($status,'code','name');
 	}
+
+    
 }

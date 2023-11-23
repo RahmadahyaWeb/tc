@@ -116,7 +116,7 @@ class Application extends \yii\base\Application
         }
     }
 
-    private $_homeUrl;
+    public $_homeUrl;
 
     /**
      * @return string the homepage URL

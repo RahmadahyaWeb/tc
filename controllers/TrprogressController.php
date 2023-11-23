@@ -101,9 +101,7 @@ class TrprogressController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->status = "OnProgress";
-            //$model->status_date = date("Y-m-d");
             $model->progress = 1;
-            // $model->progress_1 = date("Y-m-d");
             $model->input_by = Yii::$app->user->identity->username;
             $model->input_date = date("Y-m-d");
             $model->resi = date("Ymdhis").str_pad($model->id_peserta,7,"0",STR_PAD_LEFT);

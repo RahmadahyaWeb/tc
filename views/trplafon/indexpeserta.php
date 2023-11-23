@@ -44,6 +44,9 @@ $this->params['breadcrumbs'][] = $this->title;
 				'value'=>'provider.nama'
 			],
 			[
+				'attribute'=>'nonbenefit',
+			],
+			[
 				'attribute'=>'tanggal',
 				'format'=>'raw',
 				'filter'=> Html::ActiveDropDownList($searchModel,'tanggal',$listTahun,['prompt'=>'-- Tahun --','class' => 'form-control','style'=>'width:fit-content'])
@@ -70,6 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+
 	
 	<p style ="color:red">*Isi Nama plafon dan Tahun pada tanggal untuk melihat sisa plafon.</p>
 	<?php

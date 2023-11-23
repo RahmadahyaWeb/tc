@@ -58,7 +58,7 @@ class PesertaProviderController extends Controller
 		$model = new MsPeserta();
 		$data = $model->getPesertaAll($kode_anggota);
 
-		$content = $this->renderPartial('../mspeserta/kartu', [
+		$content = $this->renderPartial('kartu', [
 			'data' => $data,
 			'kode_anggota' => $kode_anggota
 		]);

@@ -15,7 +15,7 @@ $jmldata = 0;
 $jk = "";
 ?>
 <div id="maindiv">
-    <img src="<?= Yii::$app->request->baseUrl . "/images/logo-trio-300x100.png" ?>" height="70"><br /><br />
+    <img src="../TRICARE/images/logo-trio-300x100.png" height="70"><br /><br />
     <div id="divpage" style="margin-left:600px; margin-bottom: -21px">Page 1 of 1</div>
     <div id="divtable0">
         <table id="tableheader" style="border:1px solid black;border-collapse:collapse">

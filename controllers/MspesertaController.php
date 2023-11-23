@@ -213,7 +213,7 @@ class MspesertaController extends Controller
 		$modelDP = new MsDepartemen();
 		$modelhrd = new MsHRD();
 		$data = $modelhrd->getDataPesertaFromKaryawan($kd_anggota);
-		
+
 		if ($data) {
 			$res['kode_anggota'] = $data['nik'];
 			$res['nama_peserta'] = $data['nama'];
@@ -506,7 +506,7 @@ class MspesertaController extends Controller
 	public function actionIndexnonaktifpeserta($proses = null)
 	{
 		$searchModel = new Mspeserta();
-        $listData = $searchModel->listPesertaNonAktif();
+		$listData = $searchModel->listPesertaNonAktif();
 
 		return $this->render('indexnonaktifpeserta', [
 			'listData' => $listData,
@@ -515,25 +515,25 @@ class MspesertaController extends Controller
 	}
 
 	public function actionSyncnonaktifpeserta()
-    {
-        $selectedItems = Yii::$app->request->post('selectedItems');
-        
-        $transaction = Yii::$app->db->beginTransaction();
-        
-        try {
-            if (!empty($selectedItems)) {
-                foreach ($selectedItems as $selectedKodeanggota) {
-                    $model = MsPeserta::findOne(['kode_anggota' => $selectedKodeanggota]);
-                    if ($model) {
+	{
+		$selectedItems = Yii::$app->request->post('selectedItems');
+
+		$transaction = Yii::$app->db->beginTransaction();
+
+		try {
+			if (!empty($selectedItems)) {
+				foreach ($selectedItems as $selectedKodeanggota) {
+					$model = MsPeserta::findOne(['kode_anggota' => $selectedKodeanggota]);
+					if ($model) {
 						$model->modi_by = Yii::$app->user->identity->username;
 						$model->modi_date = date("Y-m-d H:i:s");
-                        $model->active = 0;
-                        if (!$model->save()) {
+						$model->active = 0;
+						if (!$model->save()) {
 							$transaction->rollBack();
-                            $errorMessage = 'Gagal nonaktifkan peserta: ' . print_r($model->getErrors(), true);
+							$errorMessage = 'Gagal nonaktifkan peserta: ' . print_r($model->getErrors(), true);
 							Yii::error($errorMessage);
 							throw new \Exception($errorMessage);
-                        }else{
+						} else {
 							$model_user = User::findOne(['username' => $selectedKodeanggota]);
 							if ($model_user) {
 								$model_user->modi_by = Yii::$app->user->identity->username;
@@ -547,20 +547,20 @@ class MspesertaController extends Controller
 								}
 							}
 						}
-                    }
-                }
+					}
+				}
 
 				$transaction->commit();
-            	Yii::$app->session->setFlash('success', 'Peserta Berhasil Dinonaktifkan.');
-            }else{
+				Yii::$app->session->setFlash('success', 'Peserta Berhasil Dinonaktifkan.');
+			} else {
 				$transaction->rollBack();
-            	Yii::$app->session->setFlash('error', 'Tidak Ada Data yang Dipilih');
+				Yii::$app->session->setFlash('error', 'Tidak Ada Data yang Dipilih');
 			}
-        } catch (\Exception $e) {
-            $transaction->rollBack();
-            Yii::$app->session->setFlash('error', 'Terjadi kesalahan: ' . $e->getMessage());
-        }
-        
-        return $this->redirect(['indexnonaktifpeserta', 'proses' => 'nonaktif']);
-    }
+		} catch (\Exception $e) {
+			$transaction->rollBack();
+			Yii::$app->session->setFlash('error', 'Terjadi kesalahan: ' . $e->getMessage());
+		}
+
+		return $this->redirect(['indexnonaktifpeserta', 'proses' => 'nonaktif']);
+	}
 }

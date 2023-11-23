@@ -130,4 +130,5 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return $this->hasOne(MsProvider::className(), ['id' => 'id_provider']);
     }
+	
 }

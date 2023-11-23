@@ -1,4 +1,8 @@
-<?php use yii\helpers\Url; ?>
+<?php 
+
+	use yii\helpers\Url;
+
+?>
 
 <div class="row min-vh-100 justify-content-center align-items-center">
 	<div class="col-md-5">

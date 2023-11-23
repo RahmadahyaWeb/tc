@@ -34,6 +34,7 @@ class MsNonbenefit extends \yii\db\ActiveRecord
             [['input_date', 'modi_date'], 'safe'],
             [['value'], 'string', 'max' => 255],
             [['input_by', 'modi_by'], 'string', 'max' => 20],
+            [['value'], 'unique'],
         ];
     }
 

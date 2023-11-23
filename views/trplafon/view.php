@@ -16,44 +16,46 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tr-plafon-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+	<h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+	<?php if (Yii::$app->user->identity->user_group == "admin") : ?>
+		<p>
+			<?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+			<?= Html::a('Delete', ['delete', 'id' => $model->id, 'id_peserta' => $model->id_peserta, 'nama_plafon' => $model->nama_plafon, 'tanggal' => $model->tanggal], [
+				'class' => 'btn btn-danger',
+				'data' => [
+					'confirm' => 'Are you sure you want to delete this item?',
+					'method' => 'post',
+				],
+			]) ?>
+		</p>
+	<?php endif; ?>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            [
-				'attribute'=> 'kode_anggota',
-				'value'=>$model->peserta->kode_anggota,
+	<?= DetailView::widget([
+		'model' => $model,
+		'attributes' => [
+			[
+				'attribute' => 'kode_anggota',
+				'value' => $model->peserta->kode_anggota,
 			],
 			[
-				'attribute'=> 'nama_peserta',
-				'value'=>$model->peserta->nama_peserta,
+				'attribute' => 'nama_peserta',
+				'value' => $model->peserta->nama_peserta,
 			],
 			'nama_plafon',
 			[
-				'attribute'=> 'nama_provider',
-				'value'=>$model->provider->jenis_provider.' - '.$model->provider->nama,
+				'attribute' => 'nama_provider',
+				'value' => $model->provider->jenis_provider . ' - ' . $model->provider->nama,
 			],
-            'tanggal',
+			'tanggal',
 			'tanggal_selesai',
-            [
+			[
 				'attribute' => 'biaya',
-				'value' => function($model, $column){
+				'value' => function ($model, $column) {
 					$res = NumberControl::widget([
 						'name' => 'biaya',
 						'value' => $model->biaya,
-						'disabled'=> true,
+						'disabled' => true,
 						'maskedInputOptions' => ['prefix' => 'Rp. '],
 						'displayOptions' => ['style' => 'width:fit-content'],
 					]);
@@ -61,14 +63,13 @@ $this->params['breadcrumbs'][] = $this->title;
 				},
 				'format' => 'raw'
 			],
-			
-            'input_by',
-            'input_date',
-            'modi_by',
-            'modi_date',
-        ],
-    ]) ?>
 
-	
+			'input_by',
+			'input_date',
+			'modi_by',
+			'modi_date',
+		],
+	]) ?>
+
 
 </div>

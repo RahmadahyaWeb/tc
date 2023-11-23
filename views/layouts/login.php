@@ -34,20 +34,40 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
     .bg-img{
       background: url("../dummy.webp");
-      background-size: cover;
-    }
+      background-size: cover  ;
+
     </style>
   </head>
   <body class="bg-img">
     <?php $this->beginBody() ?>
 
-    <div class="container">
-      <?= $content;  ?>
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="<?= \yii\helpers\Url::to(['/login/login']) ?>">
+            <i class="fa-solid fa-right-to-bracket"></i>
+            LOGIN
+        </a>
+      </div>
     </div>
+  </div>
+</nav> -->
 
-    <?php $this->endBody() ?>
+<div class="container">
+  <?= $content;  ?>
+</div>
 
-  </body>
+
+
+
+<?php $this->endBody() ?>
+
+</body>
 </html>
 
 <?php $this->endPage() ?>
+

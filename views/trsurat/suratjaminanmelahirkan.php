@@ -15,7 +15,7 @@ $jmldata = 0;
 $jk = "";
 ?>
 <div id="maindiv">
-    <img src="<?= Yii::$app->request->baseUrl . "/images/logohonda.png" ?>" height="20"><br /><br />
+    <img src="../TRICARE/images/logohonda.png" height="20"><br /><br />
     <div id="divtable0">
         <table>
             <tr>
@@ -98,5 +98,5 @@ $jk = "";
     Hormat kami,<br /><br /><br />
     <?= $data->nama_pengurus ?><hr style="color:black; width:180px; margin:-0px;text-align:left">
     <?= $data->jabatan ?><br /><br />
-    <img src="<?= Yii::$app->request->baseUrl . "/images/logofooter.png" ?>" height="130">
+    <img src="../TRICARE/images/logofooter.png" height="130">
 </div>

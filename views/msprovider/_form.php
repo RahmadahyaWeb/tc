@@ -8,8 +8,8 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="ms-provider-form">
 
+<div class="ms-provider-form">
   <?php $form = ActiveForm::begin(); ?>
 
   <div class="row">
@@ -111,8 +111,11 @@ passwordInput.addEventListener('change', function() {
   }
 });
 
+
 JS;
 
 $this->registerJs($script);
 
 ?>
+
+

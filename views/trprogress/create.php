@@ -29,6 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ); 
                 ?>
             </div>
+
             <div class="col-md-3">
             <?php
                 $model->tanggal = date('Y-m-d');
@@ -85,3 +86,5 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
 </div>
+
+

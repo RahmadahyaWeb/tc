@@ -8,9 +8,11 @@ use yii\helpers\Html;
 $this->title = 'Create User';
 $this->params['breadcrumbs'][] = ['label' => 'User Management', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="user-manage-create">
 
+    
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [

@@ -18,7 +18,7 @@ $no = 1;
 				</div>
 				<div class="col-sm-5"></div>
 				<div class="col-sm-7">
-					<button type="submit" class="btn btn-dark rounded-0 fw-bold">CARI</button>
+					<button type="submit" class="btn btn-dark rounded-0">Cari</button>
 				</div>
 			</div>
 		</form>
@@ -46,7 +46,7 @@ $no = 1;
 		</thead>
 		<tbody class="transparan text-white">
 			<?php foreach ($peserta as $data) : ?>
-				<tr class="text-center fw-bold">
+				<tr class="text-center">
 					<td><?= $no++ ?></td>
 					<td><?= $data['nama_peserta'] ?></td>
 					<td><?= $data['keterangan'] ?></td>
@@ -61,10 +61,10 @@ $no = 1;
 	<div class="row gap-3">
 		<div class="col-12 d-flex justify-content-end">
 			<?= Html::a(
-					'CETAK KARTU',
-					['printkartu', 'kode_anggota' => $data['kode_anggota']],
-					['type' => 'button', 'class' => 'btn btn-dark rounded-0 fw-bold']
-				) ?>
+				'CETAK KARTU',
+				['printkartu', 'kode_anggota' => $data['kode_anggota']],
+				['type' => 'button', 'class' => 'btn btn-dark rounded-0']
+			) ?>
 		</div>
 	</div>
 
@@ -77,24 +77,10 @@ $no = 1;
 				<th>KET</th>
 			</tr>
 		</thead>
-		<tbody class="transparan text-white">
-			<tr class="text-center fw-bold">
+		<tbody class="transparan text-white	">
+			<tr class="text-center">
 				<td colspan="3">TIDAK ADA DATA</td>
 			</tr>
 		</tbody>
 	</table>
 <?php endif ?>
-
-<div class="row gap-3">
-	<div class="col-12">
-		<div>
-			Noted :
-		</div>
-		<div>
-			<ul>
-				<li>Aktif = Karyawan Masih Bekerja di Trio Motor</li>
-				<li>Non Aktif = Karyawan Berhenti Bekerja di Trio Motor/Tidak Menjadi Tanggungan Peserta</li>
-			</ul>
-		</div>
-	</div>
-</div>

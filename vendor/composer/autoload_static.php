@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit6aede944b36a148675f5dabb511374e9
+class ComposerStaticInit7ffdc21566b7e899c59d886e9292991b
 {
     public static $files = array (
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
@@ -45,6 +45,7 @@ class ComposerStaticInit6aede944b36a148675f5dabb511374e9
         ),
         'k' => 
         array (
+            'kartik\\select2\\' => 15,
             'kartik\\number\\' => 14,
             'kartik\\mpdf\\' => 12,
             'kartik\\money\\' => 13,
@@ -157,6 +158,10 @@ class ComposerStaticInit6aede944b36a148675f5dabb511374e9
         array (
             0 => __DIR__ . '/..' . '/setasign/fpdi/src',
         ),
+        'kartik\\select2\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-widget-select2/src',
+        ),
         'kartik\\number\\' => 
         array (
             0 => __DIR__ . '/..' . '/kartik-v/yii2-number/src',
@@ -267,8 +272,8 @@ class ComposerStaticInit6aede944b36a148675f5dabb511374e9
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\EventDispatcher\\' => 
         array (
@@ -324,8 +329,8 @@ class ComposerStaticInit6aede944b36a148675f5dabb511374e9
         ),
         'Codeception\\' => 
         array (
-            0 => __DIR__ . '/..' . '/codeception/stub/src',
-            1 => __DIR__ . '/..' . '/codeception/codeception/src/Codeception',
+            0 => __DIR__ . '/..' . '/codeception/codeception/src/Codeception',
+            1 => __DIR__ . '/..' . '/codeception/stub/src',
             2 => __DIR__ . '/..' . '/codeception/verify/src/Codeception',
         ),
     );
@@ -976,10 +981,10 @@ class ComposerStaticInit6aede944b36a148675f5dabb511374e9
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit6aede944b36a148675f5dabb511374e9::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit6aede944b36a148675f5dabb511374e9::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit6aede944b36a148675f5dabb511374e9::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit6aede944b36a148675f5dabb511374e9::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit7ffdc21566b7e899c59d886e9292991b::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit7ffdc21566b7e899c59d886e9292991b::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit7ffdc21566b7e899c59d886e9292991b::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit7ffdc21566b7e899c59d886e9292991b::$classMap;
 
         }, null, ClassLoader::class);
     }

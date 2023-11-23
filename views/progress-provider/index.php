@@ -38,22 +38,18 @@ $startNumber = $pagination->getPage() * $pagination->pageSize + 1;
 						<th>NO. RESI</th>
 						<th>NAMA PROVIDER</th>
 						<th>JUMLAH TAGIHAN</th>
-						<th>NO INVOICE</th>
 						<th>STATUS</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody class="transparan text-white">
 					<?php foreach ($results as $index => $data) : ?>
-						<tr class="text-center fw-bold">
+						<tr class="text-center">
 							<td><?= $startNumber + $index ?></td>
 							<td><?= $data['resi'] ?></td>
 							<td><?= $data['nama'] ?></td>
 							<td>
 								<?= "Rp " . number_format($data['nominal_tagihan'], 0, ',', '.') ?>
-							</td>
-							<td>
-								<?= $data['no_invoice'] ?>
 							</td>
 							<td>
 								<?= $data['tanggal_pembayaran_invoice'] === null ? 'BELUM BAYAR' : 'SUDAH BAYAR' ?>
@@ -247,14 +243,13 @@ $startNumber = $pagination->getPage() * $pagination->pageSize + 1;
 						<th>NO. RESI</th>
 						<th>NAMA PROVIDER</th>
 						<th>JUMLAH TAGIHAN</th>
-						<th>NO INVOICE</th>
 						<th>STATUS</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody class="transparan">
-					<tr class="text-center fw-bold">
-						<td colspan="7">TIDAK ADA DATA</td>
+					<tr class="text-center">
+						<td colspan="6">TIDAK ADA DATA</td>
 					</tr>
 				</tbody>
 			</table>

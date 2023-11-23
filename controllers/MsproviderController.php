@@ -171,6 +171,7 @@ class MsproviderController extends Controller
                return $this->redirect(['view', 'id' => $model->id]);
            }
        }
+       
        $listJenisProvider= ArrayHelper::map($model->listJenisProvider(),'code','code');
 
        return $this->render('update', [

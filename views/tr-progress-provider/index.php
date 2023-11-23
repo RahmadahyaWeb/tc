@@ -9,7 +9,7 @@ use kartik\number\NumberControl;
 /* @var $searchModel app\models\TrProgressProviderSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Progress Tricare Provider';
+$this->title = 'Progress Providers';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tr-progress-provider-index">

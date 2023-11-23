@@ -24,7 +24,7 @@ AppAsset::register($this);
 	<title><?= Html::encode($this->title) ?></title>
 	<?php $this->head() ?>
 	<link rel="shortcut icon" type="image/png" href="images/icon.ico" />
-	<!-- </head> -->
+	<meta name="csrf-token" content="<?= Yii::$app->request->getCsrfToken() ?>">
 </head>
 <style>
 	<?php
@@ -43,7 +43,41 @@ AppAsset::register($this);
 			background-size: cover;
 		}';
 	}
-	?>
+	?>.help-block {
+		color: red !important;
+	}
+
+	#preloader {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(255, 255, 255, 0.8);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		z-index: 9999;
+	}
+
+	.loader {
+		border: 4px solid #f3f3f3;
+		border-top: 4px solid #3498db;
+		border-radius: 50%;
+		width: 40px;
+		height: 40px;
+		animation: spin 2s linear infinite;
+	}
+
+	@keyframes spin {
+		0% {
+			transform: rotate(0deg);
+		}
+
+		100% {
+			transform: rotate(360deg);
+		}
+	}
 </style>
 
 <body>
@@ -80,6 +114,10 @@ AppAsset::register($this);
 							'<li class="divider"></li>',
 							['label' => 'Trans Pemakaian Tricare', 'url' => ['/trplafon']],
 							'<li class="divider"></li>',
+							['label' => 'Rekap Data Non Benefit Tricare', 'url' => ['/trplafon/indexnonbenefit']],
+							'<li class="divider"></li>',
+							['label' => 'Rekap Data Over Plafon Tricare', 'url' => ['/trplafon-over/index']],
+							'<li class="divider"></li>',
 							['label' => 'Iuran Bulanan', 'url' => ['/trplafon/iuranbulanan']],
 							'<li class="divider"></li>',
 							['label' => 'Pembuatan Surat', 'url' => ['/trsurat']],
@@ -93,6 +131,8 @@ AppAsset::register($this);
 							['label' => 'Master Config', 'url' => ['/msconfig']],
 							'<li class="divider" style="margin:3px"></li>',
 							['label' => 'Master Benefit', 'url' => ['/msbenefit']],
+							'<li class="divider" style="margin:3px"></li>',
+							['label' => 'Master Non Benefit', 'url' => ['/msnonbenefit']],
 							'<li class="divider" style="margin:3px"></li>',
 							['label' => 'Master Departemen', 'url' => ['/msdepartemen']],
 							'<li class="divider" style="margin:3px"></li>',
@@ -153,6 +193,10 @@ AppAsset::register($this);
 							'<li class="divider"></li>',
 							['label' => 'Pemakaian dan Sisa Plafon', 'url' => ['/trplafon/indexpeserta']],
 							'<li class="divider"></li>',
+							['label' => 'Rekap Data Non Benefit Tricare', 'url' => ['/trplafon/indexnonbenefit']],
+							'<li class="divider"></li>',
+							['label' => 'Rekap Data Over Plafon Tricare', 'url' => ['/trplafon-over/index']],
+							'<li class="divider"></li>',
 							['label' => 'Daftar Provider', 'url' => ['/msprovider/indexpeserta']],
 							'<li class="divider"></li>',
 							['label' => 'Benefit Tricare', 'url' => ['/msbenefit/indexpeserta']],
@@ -198,7 +242,8 @@ AppAsset::register($this);
 	</footer>
 
 	<?php $this->endBody() ?>
-	<!-- </body></html> -->
+
+
 </body>
 
 </html>

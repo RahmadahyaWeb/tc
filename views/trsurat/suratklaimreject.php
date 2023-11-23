@@ -15,7 +15,7 @@ $jmldata = 0;
 $jk = "";
 ?>
 <div id="maindiv">
-    <img src="<?= Yii::$app->request->baseUrl . "/images/logohonda.png" ?>" height="20"><br /><br /><br />
+    <img src="../TRICARE/images/logohonda.png" height="20"><br /><br /><br />
     <div align="center"><b><u>SURAT KETERANGAN KLAIM REJECT</u></b></div>
     <div align="center">No : <?= $data->no_surat ?></div><br />
     <div style="color:red"><b>Salam Satu HATI,</b></div>

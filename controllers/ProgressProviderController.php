@@ -49,7 +49,7 @@ class ProgressProviderController extends Controller
 				"tr_progress_provider.resi"		   => $resi
 			])
 			->groupBy("tr_progress_provider.resi")
-			->orderBy("tr_progress_provider.tanggal_pembuatan_invoice");
+			->orderBy("tr_progress_provider.tanggal_pembuatan_invoice DESC");
 			
 
 		} else {
@@ -74,7 +74,7 @@ class ProgressProviderController extends Controller
 
 		$pagination = new \yii\data\Pagination([
 			'totalCount' => $query->count(),
-			'pageSize' => 3, // Number of items per page
+			'pageSize' => 3,
 		]);
 
 		$query->offset($pagination->offset)

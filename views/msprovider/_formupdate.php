@@ -78,6 +78,7 @@ use yii\widgets\ActiveForm;
 
 </div>
 
+
 <?php  
 $script = <<< JS
 const usernameInput = document.getElementById('username');

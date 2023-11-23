@@ -70,7 +70,7 @@ $no = 1;
 		<tbody class="transparan">
 			<?php if (count($data_plafon) > 0) : ?>
 				<?php foreach ($data_plafon as $data) : ?>
-					<tr class="fw-bold">
+					<tr>
 						<td><?= $no++ ?></td>
 						<td><?= $data["nama_plafon"] ?></td>
 						<td><?= "Rp " . number_format($data['total_biaya'], 0, ',', '.') ?></td>
@@ -113,22 +113,12 @@ $no = 1;
 
 											if ($sisa_pemakaian <= 0) {
 												echo "PLAFON HABIS";
-												echo "<script>
-    													window.onload = function() {
-        													alert('Peserta harap segera melapor ke Pengurus Tricare untuk proses lebih lanjut');
-    													};
-    												</script>";
 											}
 										} elseif (isset($sisa_pemakaian_plafon['nominal'])) {
 											$sisa_pemakaian = $sisa_pemakaian_plafon['nominal'] - $data['total_biaya'];
 
 											if ($sisa_pemakaian <= 0) {
 												echo "PLAFON HABIS";
-												echo "<script>
-    													window.onload = function() {
-        													alert('Peserta harap segera melapor ke Pengurus Tricare untuk proses lebih lanjut');
-    													};
-    												</script>";
 											}
 										}
 										?>
@@ -142,23 +132,6 @@ $no = 1;
 			<?php endif; ?>
 		</tbody>
 	</table>
-
-	<div class="row gap-3">
-		<div class="col-12">
-			<div>
-				Noted :
-			</div>
-			<div>
-				<ul>
-					<li>
-						Jika plafon rawat jalan dan rawat inap sudah habis akan muncul di kolom keterangan "PLAFON HABIS"
-						dan muncul notifikasi "Peserta harap segera melapor ke Pengurus Tricare untuk proses lebih lanjut".
-					</li>
-				</ul>
-			</div>
-		</div>
-	</div>
-
 <?php else : ?>
 	<table class="table table-bordered">
 		<thead class="table-dark">
@@ -171,7 +144,7 @@ $no = 1;
 			</tr>
 		</thead>
 		<tbody class="transparan text-white">
-			<tr class="text-center fw-bold">
+			<tr class="text-center">
 				<td colspan="5">TIDAK ADA DATA</td>
 			</tr>
 		</tbody>

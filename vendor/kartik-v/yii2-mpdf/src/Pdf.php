@@ -274,6 +274,7 @@ class Pdf extends Component
             $this->options['tempDir'] = $this->tempPath;
         }
         $this->_mpdf = new Mpdf($this->options);
+		$this->_mpdf->showImageErrors = true;
     }
 
     /**
