@@ -1338,11 +1338,13 @@ class TrplafonController extends Controller
 	{
 		$this->checkuser();
 
-		$this->findModel($id)->delete();
-
 		$sisaPlafon = $this->plafonCukupRahmat($id_peserta, $nama_plafon, 0, 0, $tanggal);
 
-		if ($nama_plafon == "KACAMATA" || $nama_plafon == "KECELAKAAN" || Html::like_match('%PEMBEDAHAN%', $nama_plafon)) {
+		if ($nama_plafon == "KACAMATA") {
+			$this->findModel($id)->delete();
+		} elseif ($nama_plafon == "KECELAKAAN" || Html::like_match('%PEMBEDAHAN%', $nama_plafon)) {
+			$this->findModel($id)->delete();
+		} else {
 			$dataPeserta = (new Yii\db\Query())
 				->select(['kode_anggota'])
 				->from('ms_peserta')
@@ -1364,12 +1366,12 @@ class TrplafonController extends Controller
 					'nonbenefit' => null
 				])
 				->all();
-			
+
 			foreach ($data_trans as $data) {
 				$sisaPlafon -= $data["biaya_inputan"];
 				if ($sisaPlafon < 0) {
 					$excess = abs($sisaPlafon);
-					
+
 					if ($data['biaya_inputan'] >= $excess) {
 						$biaya_tr_plafon = $data['biaya_inputan'] - abs($sisaPlafon);
 						if ($biaya_tr_plafon == 0) {
@@ -1439,7 +1441,6 @@ class TrplafonController extends Controller
 					}
 				}
 			}
-
 		}
 
 		return $this->redirect(['index']);

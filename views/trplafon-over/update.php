@@ -116,7 +116,7 @@ $('#save-button').on('click', function(e) {
     e.preventDefault(); 
 
     if (validateForm()) {
-        let formData = $('#w2').serialize();
+        let formData = $('#w1').serialize();
 
         $('#preloader').show();
 
