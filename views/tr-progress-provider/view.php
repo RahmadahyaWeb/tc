@@ -9,7 +9,7 @@ use kartik\number\NumberControl;
 /* @var $model app\models\TrProgressProvider */
 
 $this->title = $model->resi;
-$this->params['breadcrumbs'][] = ['label' => 'Tr Progress Providers', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Progress Tricare Provider', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>

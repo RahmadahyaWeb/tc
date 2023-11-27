@@ -9,12 +9,12 @@ use kartik\number\NumberControl;
 /* @var $searchModel app\models\TrProgressProviderSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Progress Providers';
+$this->title = 'Progress Tricare Provider';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tr-progress-provider-index">
 
-    <h1>Progress Provider</h1>
+    <h1>Progress Tricare Provider</h1>
 
     <p>
         <?= Html::a('Penerimaan Berkas', ['create'], ['class' => 'btn btn-success']) ?>

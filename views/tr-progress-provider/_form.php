@@ -81,37 +81,29 @@ use kartik\date\DatePicker;
     <?php
     $script = <<< JS
     $(document).ready(function() {
-        let input1 = $('#tanggal_pembuatan_invoice');
-        let input2 = $('#tanggal_penerimaan_invoice');
-        let input3 = $('#tanggal_verifikasi_validasi_invoice');
-        let input4 = $('#tanggal_pembayaran_invoice');
+        let tanggal_pembuatan_invoice = $('#tanggal_pembuatan_invoice');
+        let tanggal_penerimaan_invoice = $('#tanggal_penerimaan_invoice');
+        let tanggal_verifikasi_validasi_invoice = $('#tanggal_verifikasi_validasi_invoice');
+        let tanggal_pembayaran_invoice = $('#tanggal_pembayaran_invoice');
         let file   = $('#trprogressprovider-bukti_pembayaran');   
 
-        if (input1.val().trim() !== '') {
-            input2.prop('disabled', false);
-            var minDate = input1.val();
-            input2.attr("min", minDate);
+        if (tanggal_pembuatan_invoice.val().trim() !== '') {
+            tanggal_penerimaan_invoice.prop('disabled', false);
+            var minDate = tanggal_pembuatan_invoice.val();
+            tanggal_penerimaan_invoice.attr("min", minDate);
         } else {
-            input2.prop('disabled', true);
+            tanggal_penerimaan_invoice.prop('disabled', true);
         }
 
-        if (input2.val().trim() !== '') {
-            input3.prop('disabled', false);
-            var minDate = input2.val();
-            input3.attr("min", minDate);
+        if (tanggal_penerimaan_invoice.val().trim() !== '') {
+            tanggal_verifikasi_validasi_invoice.prop('disabled', false);
+            var minDate = tanggal_penerimaan_invoice.val();
+            tanggal_verifikasi_validasi_invoice.attr("min", minDate);
         } else {
-            input3.prop('disabled', true);
+            tanggal_verifikasi_validasi_invoice.prop('disabled', true);
         }
 
-        if (input3.val().trim() !== '') {
-            input4.prop('disabled', false);
-            var minDate = input3.val();
-            input4.attr("min", minDate);
-        } else {
-            input4.prop('disabled', true);
-        }
-
-        if (input4.prop('disabled') === true) {
+        if (tanggal_pembayaran_invoice.prop('disabled') === true) {
             file.prop('disabled', true);
         } 
 
@@ -121,53 +113,46 @@ use kartik\date\DatePicker;
             file.prop('required', false)
         }
 
-        input1.on('change', function() {
-            var minDate = input1.val();
-            input2.attr("min", minDate);
+        tanggal_pembuatan_invoice.on('change', function() {
+            var minDate = tanggal_pembuatan_invoice.val();
+            tanggal_penerimaan_invoice.attr("min", minDate);
 
-            // if (input2.val() < input1.val()) {
-            //     input2.val(minDate)
-            // }
-
-            if (input1.val().trim() === '') {
-                input2.prop('disabled', true);
+            if (tanggal_pembuatan_invoice.val().trim() === '') {
+                tanggal_penerimaan_invoice.prop('disabled', true);
+                tanggal_penerimaan_invoice.val(null);
+                tanggal_verifikasi_validasi_invoice.val(null);
+                tanggal_verifikasi_validasi_invoice.prop('disabled', true);
             } else {
-                input2.prop('disabled', false);
+                tanggal_penerimaan_invoice.prop('disabled', false);
+                if (tanggal_verifikasi_validasi_invoice.val() !== '') {
+                    if (tanggal_pembuatan_invoice.val() > tanggal_penerimaan_invoice.val()) {
+                        tanggal_penerimaan_invoice.val(tanggal_pembuatan_invoice.val());
+                        tanggal_verifikasi_validasi_invoice.val(tanggal_penerimaan_invoice.val());
+                    }
+                }
             }
         });
 
-        input2.on('change', function() {
-            var minDate = input2.val();
-            input3.attr("min", minDate);
+        tanggal_penerimaan_invoice.on('change', function() {
+            var minDate = tanggal_penerimaan_invoice.val();
+            tanggal_verifikasi_validasi_invoice.attr("min", minDate);
 
-            // if (input3.val() < input2.val()) {
-            //     input3.val(minDate)
-            // }
-
-            if (input2.val().trim() === '') {
-                input3.prop('disabled', true);
+            if (tanggal_penerimaan_invoice.val().trim() === '') {
+                tanggal_verifikasi_validasi_invoice.prop('disabled', true);
+                tanggal_verifikasi_validasi_invoice.val(null);
             } else {
-                input3.prop('disabled', false);
+                tanggal_verifikasi_validasi_invoice.prop('disabled', false);
+                if (tanggal_verifikasi_validasi_invoice.val() !== '') {
+                    if (tanggal_penerimaan_invoice.val() > tanggal_verifikasi_validasi_invoice.val()) {
+                        tanggal_verifikasi_validasi_invoice.val(tanggal_penerimaan_invoice.val());
+                        tanggal_verifikasi_validasi_invoice.attr("min", minDate);
+                    }
+                }
             }
         });
 
-        input3.on('change', function() {
-            var minDate = input3.val();
-            input4.attr("min", minDate);
-
-            // if (input4.val() < input3.val()) {
-            //     input4.val(minDate)
-            // }
-
-            if (input3.val().trim() === '') {
-                input4.prop('disabled', true);
-            } else {
-                input4.prop('disabled', false);
-            }
-        });
-
-        input4.on('change', function() {
-          if (input4.val().trim() === '') {
+        tanggal_pembayaran_invoice.on('change', function() {
+          if (tanggal_pembayaran_invoice.val().trim() === '') {
             file.prop('disabled', true);
             file.removeAttr('required');
         } else {
