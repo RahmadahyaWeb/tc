@@ -11,7 +11,7 @@ use yii\base\Model;
  * @property User|null $user This property is read-only.
  *
  */
-class 
+class
 
 
 LoginForm extends Model
@@ -31,15 +31,15 @@ LoginForm extends Model
         return [
             // username and password are both required
             [['username', 'password'], 'required'],
-			[['username','password'], 'string', 'min' => 5],
+            [['username','password'], 'string', 'min' => 5],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
         ];
     }
-	
-	public function attributeLabels()
+
+    public function attributeLabels()
     {
         return [
             'username' => 'Username / NIK',
@@ -58,16 +58,16 @@ LoginForm extends Model
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
-			if(isset($user)){
-				if($user->active == '-1'){
-					$this->addError('username', 'User Anda tidak aktif!');
-				}
-				if (!$user || !$user->validatePassword($this->username,$this->password)) {
-					$this->addError($attribute, 'Username/Password Salah');
-				}
-			} else {
-				$this->addError($attribute, 'Username/Password Salah');
-			}
+            if (isset($user)) {
+                if ($user->active == '-1') {
+                    $this->addError('username', 'User Anda tidak aktif!');
+                }
+                if (!$user || !$user->validatePassword($this->username, $this->password)) {
+                    $this->addError($attribute, 'Username/Password Salah');
+                }
+            } else {
+                $this->addError($attribute, 'Username/Password Salah');
+            }
         }
     }
 
@@ -78,10 +78,15 @@ LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
-			User::updateAll(['last_login' => date("Y-m-d H:i:s")], "username = '".$this->username."'");
-			return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+            User::updateAll(['last_login' => date("Y-m-d H:i:s")], "username = '" . $this->username . "'");
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
         }
         return false;
+    }
+
+    public function loginHRD()
+    {
+        return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
     }
 
     /**
@@ -91,10 +96,9 @@ LoginForm extends Model
      */
     public function getUser()
     {
-		if ($this->_user === false) {
+        if ($this->_user === false) {
             $this->_user = User::findByUsername($this->username);
         }
-		//var_dump($this->_user);exit();
         return $this->_user;
     }
 }

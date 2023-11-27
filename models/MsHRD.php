@@ -86,4 +86,12 @@ class MsHRD extends \yii\db\ActiveRecord
 
         return $data;
 	}
+
+    public function getDataUser(){
+        $data = self::find()
+        ->select('*')
+        ->all();
+
+        return $data;
+    }
 }

@@ -15,7 +15,7 @@ class SiteController extends Controller
     /**
      * {@inheritdoc}
      */
-	 
+
     public function behaviors()
     {
         return [
@@ -64,15 +64,13 @@ class SiteController extends Controller
     {
         if (Yii::$app->user->isGuest) {
             return $this->render('index');
-            
-        } elseif(isset(Yii::$app->user->identity->id_provider)){
+        } elseif (isset(Yii::$app->user->identity->id_provider)) {
             Yii::$app->user->logout();
             return $this->redirect(array('/site/login'));
             // return "berhasil";  
         } else {
             return $this->render('index');
         }
-
     }
 
     /**
@@ -88,17 +86,35 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post())) {
-			if($model->login()){
-				if($model->user->active == '0'){
-					return $this->redirect(array('/usermanage/gantipass'));
-				} else if ($model->user->active == '1'){
-					return $this->goBack();
-				} else {
-					$model->addError('username', 'User Anda tidak aktif!');
-				}
-			}
+            if ($model->login()) {
+                if ($model->user->active == '0') {
+                    return $this->redirect(array('/usermanage/gantipass'));
+                } else if ($model->user->active == '1') {
+                    return $this->goBack();
+                } else {
+                    $model->addError('username', 'User Anda tidak aktif!');
+                }
+            } else {
+                $data = Yii::$app->request->post();
+
+                $user_id = $data['LoginForm']['username'];
+                $conn = Yii::$app->db_hrd;
+                $command = $conn->createCommand("SELECT PASSWORD FROM MS_USER WHERE USER_ID = :user_id");
+                $command->bindParam(':user_id', $user_id);
+                $dataUser = $command->queryOne();
+
+                if ($dataUser) {
+                    $decrypt = $this->decryptOpenSSL3DES($dataUser['PASSWORD']);
+                    $password = substr($decrypt, strlen($user_id));
+                    if ($data['LoginForm']['password'] == $password) {
+                        if ($model->loginHRD()) {
+                            return $this->goBack();
+                        }
+                    }
+                }
+            }
         }
-		
+
         $model->password = '';
         return $this->render('login', [
             'model' => $model,
@@ -144,5 +160,47 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
-	
+
+    public function encryptOpenSSL3DES($text)
+    {
+        // Secret Key
+        $key1 = "Je ne vous oublie pas";
+        $key2 = "!@#$%!@#$%";
+        $key = substr($key1 . $key2, 0, 24);
+
+        // Initialization Vector
+        $iv = "";
+        $array_iv = array(12, 241, 10, 21, 90, 74, 11, 39);
+        foreach ($array_iv as $value_iv) {
+            $iv .= chr($value_iv);
+        }
+
+        $cipher = "des-ede3-cbc"; // 3DES in CBC mode
+        $options = OPENSSL_RAW_DATA;
+        $encrypt_text = openssl_encrypt($text, $cipher, $key, $options, $iv);
+
+        return base64_encode($encrypt_text);
+    }
+
+    public function decryptOpenSSL3DES($encrypted_text)
+    {
+        // Secret Key
+        $key1 = "Je ne vous oublie pas";
+        $key2 = "!@#$%!@#$%";
+        $key = substr($key1 . $key2, 0, 24);
+
+        // Initialization Vector
+        $iv = "";
+        $array_iv = array(12, 241, 10, 21, 90, 74, 11, 39);
+        foreach ($array_iv as $value_iv) {
+            $iv .= chr($value_iv);
+        }
+
+        $encrypted_text = base64_decode($encrypted_text);
+        $cipher = "des-ede3-cbc"; // 3DES in CBC mode
+        $options = OPENSSL_RAW_DATA;
+        $decrypted_text = openssl_decrypt($encrypted_text, $cipher, $key, $options, $iv);
+
+        return $decrypted_text;
+    }
 }
